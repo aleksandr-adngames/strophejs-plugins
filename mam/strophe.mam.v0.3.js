@@ -22,9 +22,14 @@ Strophe.addConnectionPlugin('mam', {
     query: function (jid, options) {
         var _p = this._p;
         var attr = {
-            type:'set',
-            id:jid
+            type:'set'
         };
+        if(!!options.mucId){
+            attr.to = options.mucId;
+            delete options['mucId'];
+        } else {
+            attr.id = jid;
+        }
         var mamAttr = {xmlns: Strophe.NS.MAM};
         if (!!options['queryid']) {
             mamAttr.queryid = options['queryid'];
